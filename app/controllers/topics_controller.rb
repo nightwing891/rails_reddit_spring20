@@ -1,19 +1,20 @@
 class TopicsController < ApplicationController
+  before_action :set_sub
   before_action :set_topic, only: [:show, :edit, :update, :destroy]
   
   def index
-    @topics = Topic.all
+    @topics = @sub.topics
   end
 
   def show
   end
 
   def new
-    @topic = Topic.new
+    @topic = @sub.topics.new
   end
 
   def create
-    @topic = Topic.new(topic_params)
+    @topic = @sub.topics.new(topic_params)
     if @topic.save
             # show page of topic
       redirect_to [@sub, @topic]
@@ -46,7 +47,11 @@ class TopicsController < ApplicationController
 
     def set_topic
       @topic = Topic.find(params[:id])
+      # @topic = @sub.topics.find(params[:id])
     end
 
+    def set_sub
+      @sub = Sub.find(params[:sub_id])
+    end
 
 end
