@@ -80,18 +80,22 @@ class SubsController < ApplicationController
 
         #   go somewhere 
         # end
-  
+  before_action :set_sub, only: [:show, :edit, :update, :destroy]
+  # after_action
   
   def index
     @subs = Sub.all 
+    # render index.html.erb
   end
 
   def show
-    @sub = Sub.find(params[:id])
+    # render show.html.erb
   end
 
   def new
     @sub = Sub.new
+    # render new.html.erb
+    # render partial: 'form'
   end
 
   def create 
@@ -100,24 +104,25 @@ class SubsController < ApplicationController
       redirect_to subs_path
     else
       render :new
+      # render partial: "form"
     end
   end
 
   def edit
-    @sub = Sub.find(params[:id])
+    # render edit.html.erb
+    # render partial: "form"
   end
 
   def update 
-    @sub = Sub.find(params[:id])
     if @sub.update(sub_params)
       redirect_to subs_path
     else
       render :edit 
+      # render partial: "form"
     end
   end
 
   def destroy
-    @sub = Sub.find(params[:id])
     @sub.destroy
     redirect_to subs_path
   end
@@ -125,5 +130,9 @@ class SubsController < ApplicationController
   private 
     def sub_params
       params.require(:sub).permit(:name)
+    end
+
+    def set_sub
+      @sub = Sub.find(params[:id])
     end
 end
